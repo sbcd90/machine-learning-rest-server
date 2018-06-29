@@ -1,1 +1,11 @@
 tf_serving_reset_server.geany
+debug/
+deps/
+CMakeCache.txt
+cmake_install.cmake
+compile_commands.json
+config.log
+Makefile
+.cproject
+.project
+CMakeFiles/
