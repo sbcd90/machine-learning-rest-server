@@ -19,4 +19,7 @@ set(CMAKE_CXX_EXTENSIONS off)
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_C_STANDARD_REQUIRED on)
 
+find_package(Proxygen REQUIRED)
+find_package(Json REQUIRED)
+
 subdirs(src)
