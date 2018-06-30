@@ -1,6 +1,19 @@
+#include <folly/Memory.h>
+#include <folly/io/async/EventBaseManager.h>
+#include <folly/portability/GFlags.h>
+#include <folly/portability/Unistd.h>
+#include <proxygen/httpserver/HTTPServer.h>
 #include <proxygen/httpserver/RequestHandlerFactory.h>
-#include <http/ServerHandler.hpp>
+
 #include <http/ServerStats.hpp>
+#include <http/ServerHandler.hpp>
+
+using namespace ServerService;
+using namespace proxygen;
+
+using folly::EventBase;
+using folly::EventBaseManager;
+using folly::SocketAddress;
 
 class ServerHandlerFactory: public RequestHandlerFactory {
 

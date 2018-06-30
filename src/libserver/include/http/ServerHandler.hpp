@@ -4,7 +4,7 @@
 #pragma once
 
 #include <folly/Memory.h>
-#include <proxygen/httpserver/RequestServer.h>
+#include <proxygen/httpserver/RequestHandler.h>
 
 namespace proxygen {
 	class ResponseHandler;
@@ -35,6 +35,6 @@ namespace ServerService {
 			ServerStats* const stats_{nullptr};
 
 			std::unique_ptr<folly::IOBuf> body_;
-	}
+	};
 } // TF_SERVING_REST_SERVER_H
 #endif

@@ -4,6 +4,10 @@
 #include <folly/portability/Unistd.h>
 #include <proxygen/httpserver/HTTPServer.h>
 
+#include <http/ServerHandler.hpp>
+#include <http/ServerStats.hpp>
+#include <http/ServerHandlerFactory.hpp>
+
 using namespace ServerService;
 using namespace proxygen;
 
@@ -35,4 +39,25 @@ int main(int argc, char* argv[]) {
 		FLAGS_threads = sysconf(_SC_NPROCESSORS_ONLN);
 		CHECK(FLAGS_threads > 0);
 	}
+
+	HTTPServerOptions options;
+	options.threads = static_cast<size_t>(FLAGS_threads);
+	options.idleTimeout = std::chrono::milliseconds(60000);
+	options.shutdownOn = {SIGINT, SIGTERM};
+	options.enableContentCompression = false;
+	options.handlerFactories = RequestHandlerChain()
+			.addThen<ServerHandlerFactory>()
+			.build();
+	options.h2cEnabled = true;
+
+	HTTPServer server(std::move(options));
+	server.bind(IPs);
+
+	// Start HTTPServer mainloop in a separate thread
+	std::thread t([&] () {
+		server.start();
+	});
+
+	t.join();
+	return 0;
 }

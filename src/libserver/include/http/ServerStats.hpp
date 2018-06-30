@@ -21,4 +21,5 @@ namespace ServerService {
 		private:
 			uint64_t reqCount_{0};
 	};
-}
+} // TF_SERVING_REST_STATS_H
+#endif
