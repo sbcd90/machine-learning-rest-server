@@ -59,6 +59,8 @@ namespace json {
 
 			template <typename D>
 			SharedPoolPtr<PredictionOutput> get_output_data(const SharedPoolPtr<PredictionData<D>> &output);
+
+			std::string get_inputs_type(const SharedPoolPtr<PredictionInput> &input);
 	};
 
 	template <typename D>

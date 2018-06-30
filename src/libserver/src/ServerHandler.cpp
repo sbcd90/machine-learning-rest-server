@@ -4,12 +4,13 @@
 #include <proxygen/httpserver/ResponseBuilder.h>
 
 #include <http/ServerStats.hpp>
+#include <jsonparse/JsonParse.hpp>
 
 using namespace proxygen;
 
 namespace ServerService {
 
-	ServerHandler::ServerHandler(ServerStats* stats): stats_(stats) {
+	ServerHandler::ServerHandler(ServerStats* stats): stats_(stats), prediction_converter_() {
 
 	}
 
@@ -26,6 +27,12 @@ namespace ServerService {
 	}
 
 	void ServerHandler::onEOM() noexcept {
+		const char* data = reinterpret_cast<const char*>(body_->data());
+		json::PredictionInput prediction_input(std::string(data, body_->length()));
+
+		std::string input_type =
+				prediction_converter_.get_inputs_type(std::make_shared<json::PredictionInput>(prediction_input));
+
 		ResponseBuilder(downstream_)
 				.status(200, "OK")
 				.header("Request-Number",

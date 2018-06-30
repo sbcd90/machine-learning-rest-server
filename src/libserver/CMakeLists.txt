@@ -2,7 +2,7 @@
 cmake_minimum_required(VERSION 3.2 FATAL_ERROR)
 project(libserver VERSION 0.1.0 LANGUAGES CXX)
 
-add_library(libserver src/ServerHandler.cpp)
+add_library(libserver src/ServerHandler.cpp src/JsonParse.cpp)
 
 target_include_directories(libserver PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
