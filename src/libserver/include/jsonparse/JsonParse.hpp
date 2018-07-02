@@ -61,6 +61,17 @@ namespace json {
 			SharedPoolPtr<PredictionOutput> get_output_data(const SharedPoolPtr<PredictionData<D>> &output);
 
 			std::string get_inputs_type(const SharedPoolPtr<PredictionInput> &input);
+
+			static std::map<std::string, int> get_input_types() {
+				std::map<std::string, int> input_types;
+
+				input_types["ints"] = 1;
+				input_types["floats"] = 2;
+				input_types["doubles"] = 3;
+				input_types["strings"] = 4;
+
+				return input_types;
+			}
 	};
 
 	template <typename D>

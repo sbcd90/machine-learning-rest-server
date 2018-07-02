@@ -40,6 +40,8 @@ namespace ServerService {
 
 			json::PredictionConverter prediction_converter_;
 
+			void sendResponse(std::unique_ptr<folly::IOBuf> response_body);
+
 	};
 } // TF_SERVING_REST_SERVER_H
 #endif
