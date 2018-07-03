@@ -21,5 +21,8 @@ set(CMAKE_C_STANDARD_REQUIRED on)
 
 find_package(Proxygen REQUIRED)
 find_package(Json REQUIRED)
+find_package(GRPC REQUIRED)
+find_package(Protobuf REQUIRED)
+find_package(TensorFlow REQUIRED)
 
 subdirs(src)
