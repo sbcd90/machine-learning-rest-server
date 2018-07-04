@@ -35,8 +35,10 @@ namespace tensorflow_serving {
 				tensorflow::Tensor tensor;
 
 				bool converted = tensor.FromProto(result_tensor_proto);
-				if (converted) {
-					results = results + tensor.SummarizeValue(10) + ", ";
+				if (converted && output_index < (map_outputs.size() - 1)) {
+					results = results + tensor.SummarizeValue(10) + " ";
+				} else if (converted) {
+					results = results + tensor.SummarizeValue(10);
 				}
 				++output_index;
 			}

@@ -32,7 +32,11 @@ namespace json {
 
 			~PredictionOutput() {}
 
-			std::string get() const { return y_output; }
+			std::string get() const {
+				json_parser j_output;
+				j_output["y_output"] = y_output;
+				return j_output.dump();
+			}
 
 		private:
 			std::string y_output;
@@ -61,6 +65,10 @@ namespace json {
 			SharedPoolPtr<PredictionOutput> get_output_data(const SharedPoolPtr<PredictionData<D>> &output);
 
 			std::string get_inputs_type(const SharedPoolPtr<PredictionInput> &input);
+
+			std::string get_model_name(const SharedPoolPtr<PredictionInput> &input);
+
+			std::string get_model_signature_name(const SharedPoolPtr<PredictionInput> &input);
 
 			static std::map<std::string, int> get_input_types() {
 				std::map<std::string, int> input_types;

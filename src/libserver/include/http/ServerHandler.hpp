@@ -7,6 +7,7 @@
 #include <proxygen/httpserver/RequestHandler.h>
 
 #include <jsonparse/JsonParse.hpp>
+#include <tensorflow_serving/TensorflowServingClient.hpp>
 
 namespace proxygen {
 	class ResponseHandler;
@@ -40,7 +41,11 @@ namespace ServerService {
 
 			json::PredictionConverter prediction_converter_;
 
+			tensorflow_serving::TensorflowServingClient tf_serving_client_;
+
 			void sendResponse(std::unique_ptr<folly::IOBuf> response_body);
+
+			void sendError(std::unique_ptr<folly::IOBuf> response_body);
 
 	};
 } // TF_SERVING_REST_SERVER_H
