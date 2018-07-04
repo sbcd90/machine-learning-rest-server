@@ -35,10 +35,8 @@ namespace ServerService {
 			std::string input_type =
 					prediction_converter_.get_inputs_type(std::make_shared<json::PredictionInput>(prediction_input));
 
-			std::cout << "hit4" << std::endl;
 			std::string model_name =
 					prediction_converter_.get_model_name(std::make_shared<json::PredictionInput>(prediction_input));
-			std::cout << "hit5" << std::endl;
 			std::string model_signature_name =
 					prediction_converter_.get_model_signature_name(std::make_shared<json::PredictionInput>(prediction_input));
 
@@ -113,11 +111,11 @@ namespace ServerService {
 
 				default:
 				{
-					throw input_type + " is not supported, the supported types are: ints, floats, doubles, strings";
+					throw std::string(input_type + " is not supported, the supported types are: ints, floats, doubles, strings");
 				}
 			}
-		} catch (...) {
-			this->sendError(folly::IOBuf::copyBuffer("hello world"));
+		} catch (std::string e) {
+			this->sendError(folly::IOBuf::copyBuffer(e));
 		}
 	}
 
