@@ -39,6 +39,8 @@ namespace ServerService {
 
 			std::unique_ptr<folly::IOBuf> body_;
 
+			std::string http_method_;
+
 			json::PredictionConverter prediction_converter_;
 
 			tensorflow_serving::TensorflowServingClient tf_serving_client_;
