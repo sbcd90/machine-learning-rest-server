@@ -2,7 +2,11 @@
 cmake_minimum_required(VERSION 3.2 FATAL_ERROR)
 project(libserver VERSION 0.1.0 LANGUAGES CXX)
 
-add_library(libserver src/ServerHandler.cpp src/JsonParse.cpp src/TensorflowServingClient.cpp)
+add_library(libserver src/ServerHandler.cpp 
+					  src/JsonParse.cpp 
+					  src/TensorflowServingClient.cpp 
+					  src/XGBoostServingClient.cpp
+					  src/XGBooster.cpp)
 
 target_include_directories(libserver PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
@@ -10,6 +14,7 @@ target_include_directories(libserver PUBLIC
 
 target_link_libraries(libserver 
 					proxygenhttpserver
+					xgboost::xgboost
 					folly
 					glog
 					gflags
@@ -28,3 +33,15 @@ target_link_libraries(libserver
 					model_proto model_service_proto 
 					prediction_log_proto 
 					regression_proto session_service_proto)
+					
+add_executable(xgboosttest src/XgBoostTest.cpp
+						   src/JsonParse.cpp  
+					       src/XGBoostServingClient.cpp
+					       src/XGBooster.cpp)
+					       
+target_include_directories(xgboosttest PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:include>)
+					       
+target_link_libraries(xgboosttest
+						xgboost::xgboost)
