@@ -22,6 +22,8 @@ POST http://localhost:11000
 
 {"input_type": "ints", "inputs": [1, 2, 4, 5], "model_name": "tensorflow-feature-sum-model", "model_signature_name": "tensorflow-feature-sum-model"}
 
+{"input_type": "floats", "inputs": [1.0, 2.0, 4.0, 5.0], "model_name": "test.cpb", "model_signature_name": "xgboost"}
+
 ```
 
 - Output
