@@ -14,6 +14,7 @@
 #include <fstream>
 #include <xgboostcxx/XGBooster.hpp>
 #include <xgboostcxx/XGBoosterImpl.hpp>
+#include <boost/lexical_cast.hpp>
 
 namespace xgboost {
 
@@ -27,7 +28,7 @@ namespace xgboost {
 
 			std::shared_ptr<json::PredictionOutput> callPredict(const std::string& model_name,
 																const std::string& model_signature_name,
-																const std::string& input);
+																const std::shared_ptr<std::vector<float>> input);
 
 		private:
 

@@ -12,6 +12,7 @@ namespace ServerService {
 
 	ServerHandler::ServerHandler(ServerStats* stats): stats_(stats),
 			tf_serving_client_(grpc::CreateChannel("localhost:9000", grpc::InsecureChannelCredentials())),
+			xgboost_serving_client_(),
 			http_method_("") {
 	}
 
@@ -34,15 +35,13 @@ namespace ServerService {
 				const char* data = reinterpret_cast<const char*>(body_->data());
 				json::PredictionInput prediction_input(std::string(data, body_->length()));
 
-				std::string input_type =
-						prediction_converter_.get_inputs_type(std::make_shared<json::PredictionInput>(prediction_input));
-
 				std::string model_name =
 						prediction_converter_.get_model_name(std::make_shared<json::PredictionInput>(prediction_input));
 				std::string model_signature_name =
 						prediction_converter_.get_model_signature_name(std::make_shared<json::PredictionInput>(prediction_input));
 
-
+				std::string input_type =
+						prediction_converter_.get_inputs_type(std::make_shared<json::PredictionInput>(prediction_input));
 				std::map<std::string, int> input_types = json::PredictionConverter::get_input_types();
 				switch(input_types.find(input_type)->second) {
 
@@ -67,15 +66,21 @@ namespace ServerService {
 					{
 						auto inputs_floats = prediction_converter_.get_input_data<float>(std::make_shared<json::PredictionInput>(prediction_input));
 						std::vector<float> input_floatv = inputs_floats->get();
-						tensorflow::Tensor inp_float(tensorflow::DT_FLOAT, tensorflow::TensorShape({input_floatv.size()}));
-						auto inp_float_mapped = inp_float.tensor<float, 1>();
-						for (int count = 0; count < input_floatv.size(); count++) {
-							inp_float_mapped(count) = input_floatv[count];
-						}
+						if (model_signature_name.compare("xgboost") == 0) {
+							std::shared_ptr<json::PredictionOutput> output_str =
+								xgboost_serving_client_.callPredict(model_name, model_signature_name, std::make_shared<std::vector<float>>(input_floatv));
+							this->sendResponse(folly::IOBuf::copyBuffer(output_str->get()));
+						} else {
+							tensorflow::Tensor inp_float(tensorflow::DT_FLOAT, tensorflow::TensorShape({input_floatv.size()}));
+							auto inp_float_mapped = inp_float.tensor<float, 1>();
+							for (int count = 0; count < input_floatv.size(); count++) {
+								inp_float_mapped(count) = input_floatv[count];
+							}
 
-						std::shared_ptr<json::PredictionOutput> output_float =
-								tf_serving_client_.callPredict(model_name, model_signature_name, inp_float, "X");
-						this->sendResponse(folly::IOBuf::copyBuffer(output_float->get()));
+							std::shared_ptr<json::PredictionOutput> output_float =
+									tf_serving_client_.callPredict(model_name, model_signature_name, inp_float, "X");
+							this->sendResponse(folly::IOBuf::copyBuffer(output_float->get()));
+						}
 						break;
 					}
 

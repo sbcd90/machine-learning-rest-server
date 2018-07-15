@@ -1,14 +1,5 @@
 cmake_minimum_required(VERSION 3.3 FATAL_ERROR)
 
-### Hunter snapshot that will be used ###
-include("cmake/HunterGate.cmake")
-
-HunterGate(
-  URL "https://github.com/ruslo/hunter/archive/v0.19.72.tar.gz"
-  SHA1 "3ed5ea39abf52afab06c77e1b7d7e41e939752f1"  
-  FILEPATH "${CMAKE_CURRENT_LIST_DIR}/cmake/Hunter/config.cmake"    
-)
-
 project("tf_serving_rest_server" VERSION 0.1.0 LANGUAGES CXX)
 set(CMAKE_PREFIX_PATH "/usr/local/lib")
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")

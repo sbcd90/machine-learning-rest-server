@@ -8,6 +8,7 @@
 
 #include <jsonparse/JsonParse.hpp>
 #include <tensorflow_serving/TensorflowServingClient.hpp>
+#include <xgboostcxx/XGBoostServingClient.hpp>
 
 namespace proxygen {
 	class ResponseHandler;
@@ -44,6 +45,8 @@ namespace ServerService {
 			json::PredictionConverter prediction_converter_;
 
 			tensorflow_serving::TensorflowServingClient tf_serving_client_;
+
+			xgboost::XgBoostServingClient xgboost_serving_client_;
 
 			void sendResponse(std::unique_ptr<folly::IOBuf> response_body);
 

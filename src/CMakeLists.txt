@@ -22,8 +22,7 @@ find_package(xgboost REQUIRED)
 ### cxxopts ### :: std::regex >= gcc 4.8
 ###############
 
-hunter_add_package(cxxopts)
-find_package(cxxopts CONFIG REQUIRED)
+find_package(cxxopts REQUIRED)
 
 # Targets that we develop
 add_subdirectory(libserver)
