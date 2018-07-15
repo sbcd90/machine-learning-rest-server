@@ -6,7 +6,7 @@ This project implements a common rest server which can serve tensorflow-serving 
 Architecture
 ============
 
-![Architecture.png](https://github.wdf.sap.corp/raw/I076326/tf_serving_rest_server/master/Architecture.PNG?token=AAAE5wNIgssNkbrlZGR-uOd1qd3GWF2Aks5bR-OFwA%3D%3D)
+![Architecture.png](https://github.com/sbcd90/machine-learning-rest-server/blob/master/Architecture.PNG)
 
 Installation
 ============
@@ -16,7 +16,7 @@ Installation
 - [proxygen](https://github.com/facebook/proxygen)
 - [tensorflow](https://github.com/tensorflow/tensorflow)
 - [tensorflow-serving](https://github.com/tensorflow/serving)
-- [xgboost] (https://github.com/dmlc/xgboost)
+- [xgboost](https://github.com/dmlc/xgboost)
 
 ### Steps
 
